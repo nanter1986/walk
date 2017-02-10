@@ -416,7 +416,17 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
         }else if(gameStage.equals("turnPlayerDonksAfterCallingFlopReraise")) {
             String action=PokerAI.decideFacingDonkAfterFlopReraise(comHand,board);
             if(p1Stack==0){
-
+                if(action.equals("raise")){
+                    comActionAmount=potSize;
+                    comActionDisplay="Calls";
+                    comStack=0;
+                    potSize=400;
+                    gameStage="preflopAllin";
+                }else{
+                    comActionDisplay="Folds";
+                    revealComHand();
+                    gameStage="waitingNextHand";
+                }
             }else{
                 if(action.equals("raise")){
                     comActionAmount=potSize;
