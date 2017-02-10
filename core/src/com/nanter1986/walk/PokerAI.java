@@ -204,4 +204,34 @@ public class PokerAI {
         }
         return action;
     }
+
+    public static String decideFacingDonkAfterFlopReraise(ArrayList<TheDeck> hand, ArrayList<TheDeck> board) {
+        String action="";
+        ArrayList<TheDeck>total=new ArrayList<>();
+        total.addAll(hand);
+        ArrayList<TheDeck>flop=new ArrayList<>();
+        flop.add(board.get(0));
+        flop.add(board.get(1));
+        flop.add(board.get(2));
+        Collections.sort(flop);
+        total.addAll(flop);
+
+        if (
+                (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue()>flop.get(1).getValue() && hand.get(0).getValue()>flop.get(1).getValue()) ||
+                        (hand.get(0).getValue() == flop.get(1).getValue() || hand.get(1).getValue() == flop.get(1).getValue()) ||
+                        (hand.get(0).getValue() == flop.get(0).getValue() || hand.get(1).getValue() == flop.get(0).getValue()) ||
+                        (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue() == flop.get(0).getValue() ) ||
+                        (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue() == flop.get(1).getValue() ) ||
+                        (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue() == flop.get(2).getValue() ) ||
+                        ((hand.get(0).getValue() == flop.get(0).getValue() || hand.get(0).getValue() == flop.get(1).getValue() || hand.get(0).getValue() == flop.get(2).getValue()) && (hand.get(1).getValue() == flop.get(0).getValue() || hand.get(1).getValue() == flop.get(1).getValue() || hand.get(1).getValue() == flop.get(2).getValue())) ||
+                        (total.get(0).getSuit().equals(total.get(1).getSuit()) && total.get(0).getSuit().equals(total.get(2).getSuit()) && total.get(0).getSuit().equals(total.get(3).getSuit()) && total.get(0).getSuit().equals(total.get(4).getSuit()))
+
+
+                ) {
+            action="raise";
+        }else{
+            action="fold";
+        }
+        return action;
+    }
 }

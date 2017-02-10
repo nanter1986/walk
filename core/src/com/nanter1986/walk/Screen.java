@@ -374,7 +374,7 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
                 comActionDisplay="";
                 playerActionDisplay="";
                 turnReveal=true;
-                gameStage="turn";
+                gameStage="turnAfterCheckCheck";
             }
         }else if(gameStage.equals("comRaisesFlopDonk")) {
             if(greenRaiseButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
@@ -386,7 +386,7 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
                 playerActionDisplay="";
                 comActionDisplay="";
                 turnReveal=true;
-                gameStage="turn";
+                gameStage="turnPlayerCalledFlopRaise";
 
             }else if(redFoldButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
                 playerActionDisplay="Fold";
@@ -405,7 +405,34 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
                 revealComHand();
                 gameStage="waitingNextHand";
             }
+        }else if(gameStage.equals("turnPlayerCalledFlopRaise")) {
+            if(orangeCallButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
+                comActionDisplay="Checks";
+                potSize=400-p1Stack-comStack;
+                gameStage="playerCheckedTurnAfterCallingFlopReraise";
+            }else if(greenRaiseButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
+                Gdx.input.getTextInput(this,"Bet...","","");
+            }
+        }else if(gameStage.equals("turnPlayerDonksAfterCallingFlopReraise")) {
+            String action=PokerAI.decideFacingDonkAfterFlopReraise(comHand,board);
+            if(p1Stack==0){
+
+            }else{
+                if(action.equals("raise")){
+                    comActionAmount=potSize;
+                    comActionDisplay="Goes All in ";
+                    comStack=0;
+                    potSize=400-p1Stack;
+                    gameStage="preflopAllin";
+                }else{
+                    comActionDisplay="Folds";
+                    revealComHand();
+                    gameStage="waitingNextHand";
+                }
+            }
+
         }
+
     }
 
     private void goToNextHand() {
@@ -526,7 +553,12 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
                     p1Stack=p1Stack-playerActionAmount;
                     playerActionDisplay="Bets "+playerActionAmount;
                     gameStage="playerDonkFlop4bet";
+                }else if(gameStage.equals("turnPlayerCalledFlopRaise")){
+                    p1Stack=p1Stack-playerActionAmount;
+                    playerActionDisplay="Bets "+playerActionAmount;
+                    gameStage="turnPlayerDonksAfterCallingFlopReraise";
                 }
+
             }
         } catch (NumberFormatException e) {
 
