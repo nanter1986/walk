@@ -19,7 +19,7 @@ import java.util.Random;
  * Created by user on 5/2/2017.
  */
 
-public class Screen extends ScreenAdapter implements Input.TextInputListener{
+public class Screen extends ScreenAdapter implements Input.TextInputListener {
     private SpriteBatch batch;
     String gameStage;
     String comActionDisplay;
@@ -49,20 +49,19 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
     boolean riverReveal;
 
 
-
     int button;
     int p1Stack;
     int comStack;
     int potSize;
-    int card1X,card1Y,card2X,card2Y;
-    int OPcard1X,OPcard1Y,OPcard2X,OPcard2Y;
+    int card1X, card1Y, card2X, card2Y;
+    int OPcard1X, OPcard1Y, OPcard2X, OPcard2Y;
     BitmapFont font = new BitmapFont();
 
     List<TheDeck> basicD;
-    ArrayList<TheDeck>basicDeck;
-    ArrayList<TheDeck>playerHand;
-    ArrayList<TheDeck>comHand;
-    ArrayList<TheDeck>board;
+    ArrayList<TheDeck> basicDeck;
+    ArrayList<TheDeck> playerHand;
+    ArrayList<TheDeck> comHand;
+    ArrayList<TheDeck> board;
 
 
     @Override
@@ -71,65 +70,65 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
     }
 
     private void revealBolleans() {
-        flopReveal=false;
-        turnReveal=false;
-        riverReveal=false;
+        flopReveal = false;
+        turnReveal = false;
+        riverReveal = false;
     }
 
     private void formBoard() {
         Collections.shuffle(basicDeck);
-        for(int i=0;i<5;i++){
+        for (int i = 0; i < 5; i++) {
             board.add(basicDeck.get(i));
         }
-        flop1=new Texture(Gdx.files.internal(board.get(0).getFileLocation()));
-        flop2=new Texture(Gdx.files.internal(board.get(1).getFileLocation()));
-        flop3=new Texture(Gdx.files.internal(board.get(2).getFileLocation()));
-        turn1=new Texture(Gdx.files.internal(board.get(3).getFileLocation()));
-        river1=new Texture(Gdx.files.internal(board.get(4).getFileLocation()));
+        flop1 = new Texture(Gdx.files.internal(board.get(0).getFileLocation()));
+        flop2 = new Texture(Gdx.files.internal(board.get(1).getFileLocation()));
+        flop3 = new Texture(Gdx.files.internal(board.get(2).getFileLocation()));
+        turn1 = new Texture(Gdx.files.internal(board.get(3).getFileLocation()));
+        river1 = new Texture(Gdx.files.internal(board.get(4).getFileLocation()));
     }
 
     private void comHandCoordinates() {
-        OPcard1X=20;
-        OPcard1Y=0;
-        OPcard2X=0;
-        OPcard2Y=OPcard1Y;
+        OPcard1X = 20;
+        OPcard1Y = 0;
+        OPcard2X = 0;
+        OPcard2Y = OPcard1Y;
     }
 
     private void p1HandCoordinates() {
-        card1X=Gdx.graphics.getWidth()-100;
-        card1Y=0;
-        card2X=card1X-20;
-        card2Y=card1Y;
+        card1X = Gdx.graphics.getWidth() - 100;
+        card1Y = 0;
+        card2X = card1X - 20;
+        card2Y = card1Y;
     }
 
     private void giveComHand() {
-        Random r2a=new Random();
-        int firstCardCom=r2a.nextInt(basicDeck.size());
+        Random r2a = new Random();
+        int firstCardCom = r2a.nextInt(basicDeck.size());
         OPcard1 = new Texture(Gdx.files.internal("back.png"));
         comHand.add(basicDeck.get(firstCardCom));
         basicDeck.remove(firstCardCom);
-        Random r2b=new Random();
-        int secondCardCom=r2b.nextInt(basicDeck.size());
+        Random r2b = new Random();
+        int secondCardCom = r2b.nextInt(basicDeck.size());
         OPcard2 = new Texture(Gdx.files.internal("back.png"));
         comHand.add(basicDeck.get(secondCardCom));
         basicDeck.remove(secondCardCom);
 
-        hiddenOPCard=new Texture(Gdx.files.internal("back.png"));
+        hiddenOPCard = new Texture(Gdx.files.internal("back.png"));
     }
 
-    private void revealComHand(){
+    private void revealComHand() {
         OPcard1 = new Texture(Gdx.files.internal(comHand.get(0).getFileLocation()));
         OPcard2 = new Texture(Gdx.files.internal(comHand.get(1).getFileLocation()));
     }
 
     private void giveP1Hand() {
-        Random r1a=new Random();
-        int firstCardPlayer=r1a.nextInt(basicDeck.size());
+        Random r1a = new Random();
+        int firstCardPlayer = r1a.nextInt(basicDeck.size());
         card1 = new Texture(Gdx.files.internal(basicDeck.get(firstCardPlayer).getFileLocation()));
         playerHand.add(basicDeck.get(firstCardPlayer));
         basicDeck.remove(firstCardPlayer);
-        Random r1b=new Random();
-        int secondCardPlayer=r1b.nextInt(basicDeck.size());
+        Random r1b = new Random();
+        int secondCardPlayer = r1b.nextInt(basicDeck.size());
         card2 = new Texture(Gdx.files.internal(basicDeck.get(secondCardPlayer).getFileLocation()));
         playerHand.add(basicDeck.get(secondCardPlayer));
         basicDeck.remove(secondCardPlayer);
@@ -138,12 +137,11 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
 
     @Override
     public void resize(int width, int height) {
-        int w=640;
-        int h=480;
+        int w = 640;
+        int h = 480;
         super.resize(w, h);
 
     }
-
 
 
     @Override
@@ -156,14 +154,13 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
     }
 
 
-
     @Override
     public void render(float delta) {
-		/*if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+        /*if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
 			card1X=Gdx.input.getX();
 			card1Y=Gdx.graphics.getHeight()-Gdx.input.getY();
 		}*/
-        potSize=400-p1Stack-comStack;
+        potSize = 400 - p1Stack - comStack;
 
 
         gameScript();
@@ -179,356 +176,351 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
         drawFonts();
 
 
-
-
-
-
         batch.end();
     }
 
     private void gameScript() {
-        if(gameStage.equals("preps")){
-            comStack=comStack-1;
-            p1Stack=p1Stack-2;
-            potSize=3;
-            String action=PokerAI.decidePreps(comHand,board);
-            if(action.equals("raise")){
-                comActionDisplay="Raise to 6";
-                comStack=comStack-5;
-                potSize=potSize+5;
-                gameStage="preflop3bet";
-            }else{
-                comActionDisplay="Folds";
+        if (gameStage.equals("preps")) {
+            comStack = comStack - 1;
+            p1Stack = p1Stack - 2;
+            potSize = 3;
+            String action = PokerAI.decidePreps(comHand, board);
+            if (action.equals("raise")) {
+                comActionDisplay = "Raise to 6";
+                comStack = comStack - 5;
+                potSize = potSize + 5;
+                gameStage = "preflop3bet";
+            } else {
+                comActionDisplay = "Folds";
                 revealComHand();
-                gameStage="waitingNextHand";
+                gameStage = "waitingNextHand";
             }
 
 
+        } else if (gameStage.equals("preflop3bet")) {
+            if (Gdx.input.justTouched()) {
+                if (greenRaiseButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                    Gdx.input.getTextInput(this, "Raise to...", "", "18");
 
-        }else if(gameStage.equals("preflop3bet")){
-            if(Gdx.input.justTouched()){
-                if(greenRaiseButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                    Gdx.input.getTextInput(this,"Raise to...","","18");
+                } else if (orangeCallButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                    p1Stack = p1Stack - 4;
+                    playerActionDisplay = "";
+                    comActionDisplay = "";
+                    flopReveal = true;
+                    gameStage = "flopCallPreflopRaise";
 
-                }else if(orangeCallButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                    p1Stack=p1Stack-4;
-                    playerActionDisplay="";
-                    comActionDisplay="";
-                    flopReveal=true;
-                    gameStage="flopCallPreflopRaise";
-
-                }else if(redFoldButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                    playerActionDisplay="Fold";
-                    gameStage="waitingNextHand";
+                } else if (redFoldButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                    playerActionDisplay = "Fold";
+                    gameStage = "waitingNextHand";
                 }
             }
-        }else if(gameStage.equals("preflop4bet")) {
-            if(playerActionAmount<=24){
-                String action=PokerAI.decide4bet25(comHand,board);
-                if(action.equals("raise")){
-                    comActionDisplay="Raise to "+ playerActionAmount*3;
-                    comStack=200-playerActionAmount*3;
-                    potSize=400-p1Stack-comStack;
-                    gameStage="preflop5bet";
-                }else{
-                    comActionDisplay="Folds";
+        } else if (gameStage.equals("preflop4bet")) {
+            if (playerActionAmount <= 24) {
+                String action = PokerAI.decide4bet25(comHand, board);
+                if (action.equals("raise")) {
+                    comActionDisplay = "Raise to " + playerActionAmount * 3;
+                    comStack = 200 - playerActionAmount * 3;
+                    potSize = 400 - p1Stack - comStack;
+                    gameStage = "preflop5bet";
+                } else {
+                    comActionDisplay = "Folds";
                     revealComHand();
-                    gameStage="waitingNextHand";
+                    gameStage = "waitingNextHand";
                 }
-            }else if(playerActionAmount>24){
-                String action=PokerAI.decide4bet13(comHand,board);
-                if(action.equals("raise")){
-                    comActionDisplay="Raise to "+ 200;
-                    comStack=0;
-                    potSize=400-p1Stack-comStack;
-                    gameStage="preflopCallto4bet";
-                }else{
-                    comActionDisplay="Folds";
+            } else if (playerActionAmount > 24) {
+                String action = PokerAI.decide4bet13(comHand, board);
+                if (action.equals("raise")) {
+                    comActionDisplay = "Raise to " + 200;
+                    comStack = 0;
+                    potSize = 400 - p1Stack - comStack;
+                    gameStage = "preflopCallto4bet";
+                } else {
+                    comActionDisplay = "Folds";
                     revealComHand();
-                    gameStage="waitingNextHand";
+                    gameStage = "waitingNextHand";
                 }
             }
 
-        }else if(gameStage.equals("flopCallPreflopRaise")){
-            if(orangeCallButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                comActionDisplay="Checks";
-                potSize=400-p1Stack-comStack;
-                gameStage="playerCheckedFlop";
-            }else if(greenRaiseButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                Gdx.input.getTextInput(this,"Bet...","","");
+        } else if (gameStage.equals("flopCallPreflopRaise")) {
+            if (orangeCallButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                comActionDisplay = "Checks";
+                potSize = 400 - p1Stack - comStack;
+                gameStage = "playerCheckedFlop";
+            } else if (greenRaiseButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                Gdx.input.getTextInput(this, "Bet...", "", "");
             }
-        }else if(gameStage.equals("waitingNextHand")){
-            if(nextButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
+        } else if (gameStage.equals("waitingNextHand")) {
+            if (nextButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
                 goToNextHand();
             }
-        }else if(gameStage.equals("preflopFacing5bet")) {
-            if(playerActionAmount==200){
-                String action=PokerAI.decide5betCall13(comHand,board);
-                if(p1Stack==0){
-                    if(action.equals("call")){
-                        comActionDisplay="Calls";
-                        comStack=0;
-                        potSize=400-p1Stack-comStack;
-                        gameStage="preflopAllin";
-                    }else{
-                        comActionDisplay="Folds";
-                        revealComHand();
-                        gameStage="waitingNextHand";
-                    }
-                }else{
-                    if(action.equals("call")){
-                        comActionDisplay="All in";
-                        comStack=0;
-                        potSize=400-p1Stack;
-                        gameStage="com6bet";
-                    }else{
-                        comActionDisplay="Folds";
-                        revealComHand();
-                        gameStage="waitingNextHand";
-                    }
-                }
-
-            }else if(gameStage=="com6bet"){
-            if(orangeCallButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                p1Stack=comStack;
-                playerActionDisplay="Calls";
-                comActionDisplay="";
-                flopReveal=true;
-                gameStage="preflopAllin";
-
-            }else if(redFoldButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                playerActionDisplay="Fold";
-                gameStage="waitingNextHand";
-            }
-            } else if(playerActionAmount<200){
-                String action=PokerAI.decideSmall5bet(comHand,board);
-                if(action.equals("raise")){
-                    comActionDisplay="Raise to "+ 200;
-                    comStack=0;
-                    potSize=400-p1Stack-comStack;
-                    gameStage="preflopAllin";
-                }else{
-                    comActionDisplay="Folds";
+        } else if (gameStage.equals("preflopFacing5bet")) {
+            String action = PokerAI.decide5betCall13(comHand, board);
+            if (p1Stack == 0) {
+                if (action.equals("call")) {
+                    comActionDisplay = "Calls";
+                    comStack = 0;
+                    potSize = 400 - p1Stack - comStack;
+                    gameStage = "preflopAllin";
+                } else {
+                    comActionDisplay = "Folds";
                     revealComHand();
-                    gameStage="waitingNextHand";
+                    gameStage = "waitingNextHand";
+                }
+            } else {
+                if (action.equals("call")) {
+                    comActionDisplay = "All in";
+                    comStack = 0;
+                    potSize = 400 - p1Stack;
+                    gameStage = "com6bet";
+                } else {
+                    comActionDisplay = "Folds";
+                    revealComHand();
+                    gameStage = "waitingNextHand";
                 }
             }
 
-        }else if(gameStage.equals("preflop5bet")) {
-            if(Gdx.input.justTouched()){
-                if(greenRaiseButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                    Gdx.input.getTextInput(this,"Raise to...","","");
+        } else if (gameStage == "com6bet") {
+            if (orangeCallButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                p1Stack = comStack;
+                playerActionDisplay = "Calls";
+                comActionDisplay = "";
+                flopReveal = true;
+                gameStage = "preflopAllin";
+
+            } else if (redFoldButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                playerActionDisplay = "Fold";
+                gameStage = "waitingNextHand";
+            }
+        } else if (playerActionAmount < 200) {
+            String action = PokerAI.decideSmall5bet(comHand, board);
+            if (action.equals("raise")) {
+                comActionDisplay = "Raise to " + 200;
+                comStack = 0;
+                potSize = 400 - p1Stack - comStack;
+                gameStage = "preflopAllin";
+            } else {
+                comActionDisplay = "Folds";
+                revealComHand();
+                gameStage = "waitingNextHand";
+            }
 
 
+        } else if (gameStage.equals("preflop5bet")) {
+            if (Gdx.input.justTouched()) {
+                if (greenRaiseButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                    Gdx.input.getTextInput(this, "Raise to...", "", "");
 
 
+                } else if (orangeCallButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                    p1Stack = comStack;
+                    playerActionDisplay = "";
+                    comActionDisplay = "";
+                    flopReveal = true;
+                    gameStage = "flopPlayerCalled4bet";
 
-                }else if(orangeCallButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                    p1Stack=comStack;
-                    playerActionDisplay="";
-                    comActionDisplay="";
-                    flopReveal=true;
-                    gameStage="flopPlayerCalled4bet";
-
-                }else if(redFoldButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                    playerActionDisplay="Fold";
-                    gameStage="waitingNextHand";
+                } else if (redFoldButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                    playerActionDisplay = "Fold";
+                    gameStage = "waitingNextHand";
                 }
             }
-        }else if(gameStage.equals("flopPlayerCalled4bet")) {
-            if(orangeCallButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                comActionDisplay="Checks";
-                potSize=400-p1Stack-comStack;
-                gameStage="playerCheckedFlo4betPot";
-            }else if(greenRaiseButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                Gdx.input.getTextInput(this,"Bet...","","");
+        } else if (gameStage.equals("flopPlayerCalled4bet")) {
+            if (orangeCallButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                comActionDisplay = "Checks";
+                potSize = 400 - p1Stack - comStack;
+                gameStage = "playerCheckedFlo4betPot";
+            } else if (greenRaiseButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                Gdx.input.getTextInput(this, "Bet...", "", "");
             }
-        }else if(gameStage.equals("playerDonkFlop4bet")) {
-            ArrayList<TheDeck>currentBoard=new ArrayList<>();
+        } else if (gameStage.equals("playerDonkFlop4bet")) {
+            ArrayList<TheDeck> currentBoard = new ArrayList<>();
             currentBoard.add(board.get(0));
             currentBoard.add(board.get(1));
             currentBoard.add(board.get(2));
-            String action=PokerAI.decideFacingFlopDonk4bet(comHand,currentBoard);
-            if(action.equals("raise")){
-                comActionAmount=playerActionAmount+potSize;
-                comActionDisplay="Raise to "+comActionAmount;
-                comStack=comStack-comActionAmount;
-                potSize=potSize+comActionAmount+playerActionAmount;
-                gameStage="comRaisesFlopDonk";
-            }else{
-                comActionDisplay="Folds";
+            String action = PokerAI.decideFacingFlopDonk4bet(comHand, currentBoard);
+            if (action.equals("raise")) {
+                comActionAmount = playerActionAmount + potSize;
+                comActionDisplay = "Raise to " + comActionAmount;
+                comStack = comStack - comActionAmount;
+                potSize = potSize + comActionAmount + playerActionAmount;
+                gameStage = "comRaisesFlopDonk";
+            } else {
+                comActionDisplay = "Folds";
                 revealComHand();
-                gameStage="waitingNextHand";
+                gameStage = "waitingNextHand";
             }
-        }else if(gameStage.equals("playerCheckFlop4bet")) {
-            ArrayList<TheDeck>currentBoard=new ArrayList<>();
+        } else if (gameStage.equals("playerCheckFlop4bet")) {
+            ArrayList<TheDeck> currentBoard = new ArrayList<>();
             currentBoard.add(board.get(0));
             currentBoard.add(board.get(1));
             currentBoard.add(board.get(2));
-            String action=PokerAI.decideFacingFlopCheck4bet(comHand,currentBoard);
-            if(action.equals("bet")){
-                comActionAmount=200-potSize/2;
-                comActionDisplay="All in";
-                comStack=0;
-                potSize=potSize+comActionAmount;
-                gameStage="preflopAllin";
-            }else{
-                comActionDisplay="Checks";
+            String action = PokerAI.decideFacingFlopCheck4bet(comHand, currentBoard);
+            if (action.equals("bet")) {
+                comActionAmount = 200 - potSize / 2;
+                comActionDisplay = "All in";
+                comStack = 0;
+                potSize = potSize + comActionAmount;
+                gameStage = "preflopAllin";
+            } else {
+                comActionDisplay = "Checks";
                 revealComHand();
-                gameStage="waitingNextHand";
+                gameStage = "waitingNextHand";
             }
-        }else if(gameStage.equals("preflopAllin")) {
+        } else if (gameStage.equals("preflopAllin")) {
             revealComHand();
-            flopReveal=true;
-            turnReveal=true;
-            riverReveal=true;
-            gameStage="waitingNextHand";
-        }else if(gameStage.equals("playerBetFlop")) {
-            String action=PokerAI.decideFacingFlopDonk(comHand,board);
-            if(action.equals("raise")){
-                comActionAmount=playerActionAmount+potSize;
-                comActionDisplay="Raise to "+comActionAmount;
-                comStack=comStack-comActionAmount;
-                potSize=potSize+comActionAmount+playerActionAmount;
-                gameStage="comRaisesFlopDonk";
-            }else{
-                comActionDisplay="Folds";
+            flopReveal = true;
+            turnReveal = true;
+            riverReveal = true;
+            gameStage = "waitingNextHand";
+        } else if (gameStage.equals("playerBetFlop")) {
+            String action = PokerAI.decideFacingFlopDonk(comHand, board);
+            if (action.equals("raise")) {
+                comActionAmount = playerActionAmount + potSize;
+                comActionDisplay = "Raise to " + comActionAmount;
+                comStack = comStack - comActionAmount;
+                potSize = potSize + comActionAmount + playerActionAmount;
+                gameStage = "comRaisesFlopDonk";
+            } else {
+                comActionDisplay = "Folds";
                 revealComHand();
-                gameStage="waitingNextHand";
+                gameStage = "waitingNextHand";
             }
-        }else if(gameStage.equals("playerCheckedFlop")) {
-            ArrayList<TheDeck>currentBoard=new ArrayList<>();
+        } else if (gameStage.equals("playerCheckedFlop")) {
+            ArrayList<TheDeck> currentBoard = new ArrayList<>();
             currentBoard.add(board.get(0));
             currentBoard.add(board.get(1));
             currentBoard.add(board.get(2));
-            String action=PokerAI.decideFacingFlopCheck(comHand,currentBoard);
-            if(action.equals("bet")){
-                comActionAmount=potSize;
-                comActionDisplay="Bets "+comActionAmount;
-                comStack=comStack-comActionAmount;
-                potSize=potSize+comActionAmount;
-                gameStage="comBetsAfterFlopCheck";
-            }else{
-                comActionDisplay="";
-                playerActionDisplay="";
-                turnReveal=true;
-                gameStage="turnAfterCheckCheck";
+            String action = PokerAI.decideFacingFlopCheck(comHand, currentBoard);
+            if (action.equals("bet")) {
+                comActionAmount = potSize;
+                comActionDisplay = "Bets " + comActionAmount;
+                comStack = comStack - comActionAmount;
+                potSize = potSize + comActionAmount;
+                gameStage = "comBetsAfterFlopCheck";
+            } else {
+                comActionDisplay = "";
+                playerActionDisplay = "";
+                turnReveal = true;
+                gameStage = "turnAfterCheckCheck";
             }
-        }else if(gameStage.equals("comRaisesFlopDonk")) {
-            if(greenRaiseButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                Gdx.input.getTextInput(this,"Raise to...","","");
+        } else if (gameStage.equals("comRaisesFlopDonk")) {
+            if (greenRaiseButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                Gdx.input.getTextInput(this, "Raise to...", "", "");
 
-            }else if(orangeCallButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                p1Stack=comStack;
-                potSize=400-comStack-p1Stack;
-                playerActionDisplay="";
-                comActionDisplay="";
-                turnReveal=true;
-                gameStage="turnPlayerCalledFlopRaise";
+            } else if (orangeCallButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                p1Stack = comStack;
+                potSize = 400 - comStack - p1Stack;
+                playerActionDisplay = "";
+                comActionDisplay = "";
+                turnReveal = true;
+                gameStage = "turnPlayerCalledFlopRaise";
 
-            }else if(redFoldButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                playerActionDisplay="Fold";
-                gameStage="waitingNextHand";
+            } else if (redFoldButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                playerActionDisplay = "Fold";
+                gameStage = "waitingNextHand";
             }
-        }else if(gameStage.equals("playerReraisesFlop")) {
-            ArrayList<TheDeck>currentBoard=new ArrayList<>();
+        } else if (gameStage.equals("playerReraisesFlop")) {
+            ArrayList<TheDeck> currentBoard = new ArrayList<>();
             currentBoard.add(board.get(0));
             currentBoard.add(board.get(1));
             currentBoard.add(board.get(2));
-            String action=PokerAI.decideFacingFlopReraise(comHand,currentBoard);
-            if(action.equals("raise")){
-                comActionAmount=potSize;
-                comActionDisplay="Goes All in ";
-                comStack=0;
-                potSize=400-p1Stack;
-                gameStage="preflopAllin";
-            }else{
-                comActionDisplay="Folds";
+            String action = PokerAI.decideFacingFlopReraise(comHand, currentBoard);
+            if (action.equals("raise")) {
+                comActionAmount = potSize;
+                comActionDisplay = "Goes All in ";
+                comStack = 0;
+                potSize = 400 - p1Stack;
+                gameStage = "preflopAllin";
+            } else {
+                comActionDisplay = "Folds";
                 revealComHand();
-                gameStage="waitingNextHand";
+                gameStage = "waitingNextHand";
             }
-        }else if(gameStage.equals("turnPlayerCalledFlopRaise")) {
-            if(orangeCallButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                comActionDisplay="Checks";
-                potSize=400-p1Stack-comStack;
-                gameStage="playerCheckedTurnAfterCallingFlopReraise";
-            }else if(greenRaiseButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
-                Gdx.input.getTextInput(this,"Bet...","","");
+        } else if (gameStage.equals("turnPlayerCalledFlopRaise")) {
+            if (orangeCallButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                comActionDisplay = "Checks";
+                potSize = 400 - p1Stack - comStack;
+                gameStage = "playerCheckedTurnAfterCallingFlopReraise";
+            } else if (greenRaiseButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                Gdx.input.getTextInput(this, "Bet...", "", "");
             }
-        }else if(gameStage.equals("turnPlayerDonksAfterCallingFlopReraise")) {
-            ArrayList<TheDeck>currentBoard=new ArrayList<>();
+        } else if (gameStage.equals("turnPlayerDonksAfterCallingFlopReraise")) {
+            ArrayList<TheDeck> currentBoard = new ArrayList<>();
             currentBoard.add(board.get(0));
             currentBoard.add(board.get(1));
             currentBoard.add(board.get(2));
             currentBoard.add(board.get(3));
-            String action=PokerAI.decideFacingDonkAfterFlopReraise(comHand,currentBoard);
-            if(p1Stack==0){
-                if(action.equals("raise")){
-                    comActionAmount=potSize;
-                    comActionDisplay="Calls";
-                    comStack=0;
-                    potSize=400;
-                    gameStage="preflopAllin";
-                }else{
-                    comActionDisplay="Folds";
+            String action = PokerAI.decideFacingDonkAfterFlopReraise(comHand, currentBoard);
+            if (p1Stack == 0) {
+                if (action.equals("raise")) {
+                    comActionAmount = potSize;
+                    comActionDisplay = "Calls";
+                    comStack = 0;
+                    potSize = 400;
+                    gameStage = "preflopAllin";
+                } else {
+                    comActionDisplay = "Folds";
                     revealComHand();
-                    gameStage="waitingNextHand";
+                    gameStage = "waitingNextHand";
                 }
-            }else{
-                if(action.equals("raise")){
-                    comActionAmount=potSize;
-                    comActionDisplay="Goes All in ";
-                    comStack=0;
-                    potSize=400-p1Stack;
-                    gameStage="preflopAllin";
-                }else{
-                    comActionDisplay="Folds";
+            } else {
+                if (action.equals("raise")) {
+                    comActionAmount = potSize;
+                    comActionDisplay = "Goes All in ";
+                    comStack = 0;
+                    potSize = 400 - p1Stack;
+                    gameStage = "preflopAllin";
+                } else {
+                    comActionDisplay = "Folds";
                     revealComHand();
-                    gameStage="waitingNextHand";
+                    gameStage = "waitingNextHand";
                 }
             }
 
-        }else if(gameStage.equals("turnPlayerCheckedAfterCallingFlopReraise")) {
-            ArrayList<TheDeck>currentBoard=new ArrayList<>();
+        } else if (gameStage.equals("turnPlayerCheckedAfterCallingFlopReraise")) {
+            ArrayList<TheDeck> currentBoard = new ArrayList<>();
             currentBoard.add(board.get(0));
             currentBoard.add(board.get(1));
             currentBoard.add(board.get(2));
             currentBoard.add(board.get(3));
-            String action=PokerAI.decideFacingCheckAfterFlopReraiseCall(comHand,currentBoard);
-            if(action.equals("bet")){
-                comActionAmount=potSize;
-                comActionDisplay="All In";
-                comStack=0;
-                potSize=400-p1Stack;
-                gameStage="preflopAllin";
-            }else{
-                comActionDisplay="Check";
-                gameStage="riverPlayerCheckedAfterCallingFlopReraiseCheckCheck";
+            String action = PokerAI.decideFacingCheckAfterFlopReraiseCall(comHand, currentBoard);
+            if (action.equals("bet")) {
+                comActionAmount = potSize;
+                comActionDisplay = "All In";
+                comStack = 0;
+                potSize = 400 - p1Stack;
+                gameStage = "preflopAllin";
+            } else {
+                comActionDisplay = "Check";
+                gameStage = "riverPlayerCheckedAfterCallingFlopReraiseCheckCheck";
             }
         }
-
     }
 
-    private void goToNextHand() {
-        basicD=Arrays.asList(TheDeck.values());
-        playerHand=new ArrayList<>();
-        comHand=new ArrayList<>();
-        board=new ArrayList<>();
 
-        gameStage="preps";
-        comActionDisplay="";
-        playerActionDisplay="";
-        playerActionAmount=0;
-        comActionAmount=0;
-        button=1;
-        p1Stack=200;
-        comStack=200;
-        basicDeck=new ArrayList<>(basicD);
-        nextButton=new ClickableButton(590,640,0,50,new Texture(Gdx.files.internal("nextB.png")));
-        buttonPic=new ClickableButton(50,100,240,290,new Texture(Gdx.files.internal("button.jpg")));
-        redFoldButton=new ClickableButton(450,500,230,280,new Texture(Gdx.files.internal("redB.png")));
-        orangeCallButton=new ClickableButton(520,570,230,280,new Texture(Gdx.files.internal("orangeB.png")));
-        greenRaiseButton=new ClickableButton(590,640,230,280,new Texture(Gdx.files.internal("greenB.png")));
+
+
+
+
+    private void goToNextHand() {
+        basicD = Arrays.asList(TheDeck.values());
+        playerHand = new ArrayList<>();
+        comHand = new ArrayList<>();
+        board = new ArrayList<>();
+
+        gameStage = "preps";
+        comActionDisplay = "";
+        playerActionDisplay = "";
+        playerActionAmount = 0;
+        comActionAmount = 0;
+        button = 1;
+        p1Stack = 200;
+        comStack = 200;
+        basicDeck = new ArrayList<>(basicD);
+        nextButton = new ClickableButton(590, 640, 0, 50, new Texture(Gdx.files.internal("nextB.png")));
+        buttonPic = new ClickableButton(50, 100, 240, 290, new Texture(Gdx.files.internal("button.jpg")));
+        redFoldButton = new ClickableButton(450, 500, 230, 280, new Texture(Gdx.files.internal("redB.png")));
+        orangeCallButton = new ClickableButton(520, 570, 230, 280, new Texture(Gdx.files.internal("orangeB.png")));
+        greenRaiseButton = new ClickableButton(590, 640, 230, 280, new Texture(Gdx.files.internal("greenB.png")));
 
 
         revealBolleans();
@@ -551,25 +543,25 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
     }
 
     private void drawButtons() {
-        if(button==1){
+        if (button == 1) {
             buttonPic.drawSelf(batch);
-        }else{
+        } else {
             buttonPic.drawSelf(batch);
         }
-            redFoldButton.drawSelf(batch);
-            orangeCallButton.drawSelf(batch);
-            greenRaiseButton.drawSelf(batch);
-        if (gameStage.equals("waitingNextHand")){
+        redFoldButton.drawSelf(batch);
+        orangeCallButton.drawSelf(batch);
+        greenRaiseButton.drawSelf(batch);
+        if (gameStage.equals("waitingNextHand")) {
             nextButton.drawSelf(batch);
         }
     }
 
     private void drawFonts() {
-        font.draw(batch, "Com stack:"+comStack, 130, 200);
+        font.draw(batch, "Com stack:" + comStack, 130, 200);
         font.draw(batch, comActionDisplay, 130, 150);
         font.draw(batch, playerActionDisplay, 400, 150);
-        font.draw(batch, "POT:"+potSize, 250, 100);
-        font.draw(batch, "Player stack:"+p1Stack, 400, 200);
+        font.draw(batch, "POT:" + potSize, 250, 100);
+        font.draw(batch, "Player stack:" + p1Stack, 400, 200);
         font.draw(batch, "Fold", 460, 230);
         font.draw(batch, "Call", 530, 230);
         font.draw(batch, "Raise", 595, 230);
@@ -582,15 +574,15 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
 
         batch.draw(OPcard1, OPcard2X, OPcard2Y, 100f, 200f);
         batch.draw(OPcard2, OPcard1X, OPcard1Y, 100f, 200f);
-        if(flopReveal==true){
+        if (flopReveal == true) {
             batch.draw(flop1, 0, 330, 75f, 150f);
             batch.draw(flop2, 75, 330, 75f, 150f);
             batch.draw(flop3, 150, 330, 75f, 150f);
         }
-        if(turnReveal==true){
+        if (turnReveal == true) {
             batch.draw(turn1, 240, 330, 75f, 150f);
         }
-        if(riverReveal==true){
+        if (riverReveal == true) {
             batch.draw(river1, 320, 330, 75f, 150f);
         }
     }
@@ -598,45 +590,45 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
     @Override
     public void input(String text) {
         try {
-            int tempRaiseLimit=comActionAmount-playerActionAmount;
-            playerActionAmount=Integer.parseInt(text);
-            Gdx.app.log("a",""+playerActionAmount);
-            if(playerActionAmount>p1Stack || playerActionAmount<1 || playerActionAmount< tempRaiseLimit){
-                Gdx.input.getTextInput(this,"Incorrect Amount","","");
-            }else{
-                if(gameStage.equals("preflop3bet")){
-                    p1Stack=200-playerActionAmount;
-                    gameStage="preflop4bet";
-                }else if(gameStage.equals("preflop5bet")){
-                    if(playerActionAmount<200){
-                        p1Stack=200-playerActionAmount;
-                        gameStage="preflopFacing5bet";
-                    }else if(playerActionAmount==200){
-                        p1Stack=200-playerActionAmount;
-                        gameStage="preflopFacing5bet";
+            int tempRaiseLimit = comActionAmount - playerActionAmount;
+            playerActionAmount = Integer.parseInt(text);
+            Gdx.app.log("a", "" + playerActionAmount+" "+gameStage);
+            if (playerActionAmount > p1Stack || playerActionAmount < 1 || playerActionAmount < tempRaiseLimit) {
+                Gdx.input.getTextInput(this, "Incorrect Amount", "", "");
+            } else {
+                if (gameStage.equals("preflop3bet")) {
+                    p1Stack = 200 - playerActionAmount;
+                    gameStage = "preflop4bet";
+                } else if (gameStage.equals("preflop5bet")) {
+                    if (playerActionAmount < 200) {
+                        p1Stack = 200 - playerActionAmount;
+                        gameStage = "preflopFacing5bet";
+                    } else if (playerActionAmount == 200) {
+                        p1Stack = 200 - playerActionAmount;
+                        gameStage = "preflopFacing5bet";
                     }
-                }else if(gameStage.equals("flopCallPreflopRaise")){
-                    p1Stack=p1Stack-playerActionAmount;
-                    playerActionDisplay="Bets "+playerActionAmount;
-                    gameStage="playerBetFlop";
-                }else if(gameStage.equals("comRaisesFlopDonk")){
-                    p1Stack=p1Stack-playerActionAmount;
-                    playerActionDisplay="Raises to "+playerActionAmount;
-                    gameStage="playerReraisesFlop";
-                }else if(gameStage.equals("flopPlayerCalled4bet")){
-                    p1Stack=p1Stack-playerActionAmount;
-                    playerActionDisplay="Bets "+playerActionAmount;
-                    gameStage="playerDonkFlop4bet";
-                }else if(gameStage.equals("turnPlayerCalledFlopRaise")){
-                    p1Stack=p1Stack-playerActionAmount;
-                    playerActionDisplay="Bets "+playerActionAmount;
-                    gameStage="turnPlayerDonksAfterCallingFlopReraise";
+                } else if (gameStage.equals("flopCallPreflopRaise")) {
+                    p1Stack = p1Stack - playerActionAmount;
+                    playerActionDisplay = "Bets " + playerActionAmount;
+                    gameStage = "playerBetFlop";
+                } else if (gameStage.equals("comRaisesFlopDonk")) {
+                    p1Stack = p1Stack - playerActionAmount;
+                    playerActionDisplay = "Raises to " + playerActionAmount;
+                    gameStage = "playerReraisesFlop";
+                } else if (gameStage.equals("flopPlayerCalled4bet")) {
+                    p1Stack = p1Stack - playerActionAmount;
+                    playerActionDisplay = "Bets " + playerActionAmount;
+                    gameStage = "playerDonkFlop4bet";
+                } else if (gameStage.equals("turnPlayerCalledFlopRaise")) {
+                    p1Stack = p1Stack - playerActionAmount;
+                    playerActionDisplay = "Bets " + playerActionAmount;
+                    gameStage = "turnPlayerDonksAfterCallingFlopReraise";
                 }
 
             }
         } catch (NumberFormatException e) {
 
-            Gdx.input.getTextInput(this,"Incorrect Amount","","");
+            Gdx.input.getTextInput(this, "Incorrect Amount", "", "");
             e.printStackTrace();
         }
     }
