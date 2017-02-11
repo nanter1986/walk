@@ -216,25 +216,25 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener {
                 }
             }
         } else if (gameStage.equals("preflop4bet")) {
-            if (playerActionAmount <= 24) {
+            if (playerActionAmount < 25) {
                 String action = PokerAI.decide4bet25(comHand, board);
                 if (action.equals("raise")) {
                     comActionDisplay = "Raise to " + playerActionAmount * 3;
                     comStack = 200 - playerActionAmount * 3;
                     potSize = 400 - p1Stack - comStack;
-                    gameStage = "preflop5bet";
+                    gameStage = "preflopPlayerFaces4bet";
                 } else {
                     comActionDisplay = "Folds";
                     revealComHand();
                     gameStage = "waitingNextHand";
                 }
-            } else if (playerActionAmount > 24) {
+            } else {
                 String action = PokerAI.decide4bet13(comHand, board);
                 if (action.equals("raise")) {
                     comActionDisplay = "Raise to " + 200;
                     comStack = 0;
                     potSize = 400 - p1Stack - comStack;
-                    gameStage = "preflopCallto4bet";
+                    gameStage = "preflopPlayerFacesAllin4bet";
                 } else {
                     comActionDisplay = "Folds";
                     revealComHand();
@@ -281,6 +281,7 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener {
             }
 
         } else if (gameStage == "com6bet") {
+            if(p1Stack==0){
             if (orangeCallButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
                 p1Stack = comStack;
                 playerActionDisplay = "Calls";
@@ -293,21 +294,21 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener {
                 gameStage = "waitingNextHand";
             }
         } else if (playerActionAmount < 200) {
-            String action = PokerAI.decideSmall5bet(comHand, board);
-            if (action.equals("raise")) {
-                comActionDisplay = "Raise to " + 200;
-                comStack = 0;
-                potSize = 400 - p1Stack - comStack;
-                gameStage = "preflopAllin";
-            } else {
-                comActionDisplay = "Folds";
-                revealComHand();
-                gameStage = "waitingNextHand";
+                String action = PokerAI.decideSmall5bet(comHand, board);
+                if (action.equals("raise")) {
+                    comActionDisplay = "Raise to " + 200;
+                    comStack = 0;
+                    potSize = 400 - p1Stack - comStack;
+                    gameStage = "preflopAllin";
+                } else {
+                    comActionDisplay = "Folds";
+                    revealComHand();
+                    gameStage = "waitingNextHand";
+                }
             }
 
 
-        } else if (gameStage.equals("preflop5bet")) {
-            if (Gdx.input.justTouched()) {
+        } else if (gameStage.equals("preflopPlayerFaces4bet")) {
                 if (greenRaiseButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
                     Gdx.input.getTextInput(this, "Raise to...", "", "");
 
@@ -323,12 +324,11 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener {
                     playerActionDisplay = "Fold";
                     gameStage = "waitingNextHand";
                 }
-            }
-        } else if (gameStage.equals("flopPlayerCalled4bet")) {
+        } else if (gameStage.equals("preflopPlayerFacesAllin4bet")) {
             if (orangeCallButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
                 comActionDisplay = "Checks";
                 potSize = 400 - p1Stack - comStack;
-                gameStage = "playerCheckedFlo4betPot";
+                gameStage = "playerCheckedFlop4bet";
             } else if (greenRaiseButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
                 Gdx.input.getTextInput(this, "Bet...", "", "");
             }
