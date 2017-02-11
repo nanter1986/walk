@@ -180,6 +180,7 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener {
     }
 
     private void gameScript() {
+        Gdx.app.log("a", "" + playerActionAmount+" "+gameStage);
         if (gameStage.equals("preps")) {
             comStack = comStack - 1;
             p1Stack = p1Stack - 2;
