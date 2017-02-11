@@ -534,7 +534,7 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener {
             currentBoard.add(board.get(1));
             currentBoard.add(board.get(2));
             currentBoard.add(board.get(3));
-            String action = PokerAI.decideFacingCheckAfterFlopReraiseCall(comHand, currentBoard);
+            String action = PokerAI.decideFacingDonkAfterFlopReraiseCall(comHand, currentBoard);
             if (action.equals("raise")) {
                 comActionAmount = 3*playerActionAmount;
                 comActionDisplay = "Raise to "+comActionAmount;
@@ -544,6 +544,40 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener {
             } else {
                 comActionDisplay = "Folds";
                 revealComHand();
+                gameStage = "waitingNextHand";
+            }
+        }else if(gameStage.equals("playerCheckedTurnAfterCallingFlopBet")){
+            ArrayList<TheDeck> currentBoard = new ArrayList<>();
+            currentBoard.add(board.get(0));
+            currentBoard.add(board.get(1));
+            currentBoard.add(board.get(2));
+            currentBoard.add(board.get(3));
+            String action = PokerAI.decideFacingCheckAfterPlayerCalledFlopBet(comHand, currentBoard);
+            if (action.equals("raise")) {
+                comActionAmount = potSize;
+                comActionDisplay = "Bets "+comActionAmount;
+                comStack = comStack-comActionAmount;
+                potSize = 400 - p1Stack-comStack;
+                gameStage = "turnPlayerFacingTurnBetAfterCallFlopBet";
+            } else {
+                comActionDisplay = "Folds";
+                revealComHand();
+                gameStage = "waitingNextHand";
+            }
+        }else if(gameStage.equals("turnPlayerFacingTurnBetAfterCallFlopBet")){
+            if (greenRaiseButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                Gdx.input.getTextInput(this, "Raise to...", "", "");
+
+
+            } else if (orangeCallButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                p1Stack = comStack;
+                playerActionDisplay = "Calls";
+                comActionDisplay = "";
+                riverReveal = true;
+                gameStage = "turnPlayerCalledFlopBetCalledTurnBet";
+
+            } else if (redFoldButton.checkIfClicked(Gdx.input.getX(), Gdx.input.getY())) {
+                playerActionDisplay = "Fold";
                 gameStage = "waitingNextHand";
             }
         }
@@ -677,6 +711,8 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener {
                     p1Stack = p1Stack - playerActionAmount;
                     playerActionDisplay = "Bets " + playerActionAmount;
                     gameStage = "turnPlayerDonksAfterCallingFlopBet";
+                }else if(gameStage.equals("turnPlayerFacingTurnBetAfterCallFlopBet")){
+
                 }
 
             }

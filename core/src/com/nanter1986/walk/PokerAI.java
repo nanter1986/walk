@@ -578,4 +578,80 @@ public class PokerAI {
         }
         return hasThis;
     }
+
+    public static String decideFacingDonkAfterFlopReraiseCall(ArrayList<TheDeck> hand, ArrayList<TheDeck> board) {
+        String action="";
+        ArrayList<TheDeck>total=new ArrayList<>();
+        total.addAll(hand);
+        total.addAll(board);
+
+        if(checkForFlush(hand,board)){
+            action="raise";
+        }else if(checkForStraight(hand,board)) {
+            action="raise";
+        }else if(checkForSet(hand,board)) {
+            action="raise";
+        }else if(checkForTwoPair(hand,board)) {
+            action="raise";
+        }else if(checkForOverPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForTopPair(hand,board)) {
+            action="raise";
+        }else if(checkForSecondPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForSecondPair(hand,board)) {
+            action="raise";
+        }else if(checkForThirdPair(hand,board)) {
+            action="raise";
+        }else if(checkForThirdPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForFourthPair(hand,board)) {
+            action="raise";
+        }else if(checkForFifthPair(hand,board)) {
+            action="raise";
+        }else{
+            action="fold";
+        }
+
+
+        return action;
+    }
+
+    public static String decideFacingCheckAfterPlayerCalledFlopBet(ArrayList<TheDeck> hand, ArrayList<TheDeck> board) {
+        String action="";
+        ArrayList<TheDeck>total=new ArrayList<>();
+        total.addAll(hand);
+        total.addAll(board);
+
+        if(checkForFlush(hand,board)){
+            action="raise";
+        }else if(checkForStraight(hand,board)) {
+            action="raise";
+        }else if(checkForSet(hand,board)) {
+            action="raise";
+        }else if(checkForTwoPair(hand,board)) {
+            action="raise";
+        }else if(checkForOverPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForTopPair(hand,board)) {
+            action="raise";
+        }else if(checkForSecondPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForSecondPair(hand,board)) {
+            action="raise";
+        }else if(checkForThirdPair(hand,board)) {
+            action="raise";
+        }else if(checkForThirdPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForFourthPair(hand,board)) {
+            action="raise";
+        }else if(checkForFifthPair(hand,board)) {
+            action="raise";
+        }else{
+            action="fold";
+        }
+
+
+        return action;
+    }
 }
