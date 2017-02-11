@@ -215,7 +215,7 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
                     playerActionDisplay="";
                     comActionDisplay="";
                     flopReveal=true;
-                    gameStage="flop";
+                    gameStage="flopCallPreflopRaise";
 
                 }else if(redFoldButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
                     playerActionDisplay="Fold";
@@ -249,7 +249,7 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
                 }
             }
 
-        }else if(gameStage.equals("flop")){
+        }else if(gameStage.equals("flopCallPreflopRaise")){
             if(orangeCallButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
                 comActionDisplay="Checks";
                 potSize=400-p1Stack-comStack;
@@ -264,17 +264,43 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
         }else if(gameStage.equals("preflopFacing5bet")) {
             if(playerActionAmount==200){
                 String action=PokerAI.decide5betCall13(comHand,board);
-                if(action.equals("call")){
-                    comActionDisplay="Calls";
-                    comStack=0;
-                    potSize=400-p1Stack-comStack;
-                    gameStage="preflopAllin";
+                if(p1Stack==0){
+                    if(action.equals("call")){
+                        comActionDisplay="Calls";
+                        comStack=0;
+                        potSize=400-p1Stack-comStack;
+                        gameStage="preflopAllin";
+                    }else{
+                        comActionDisplay="Folds";
+                        revealComHand();
+                        gameStage="waitingNextHand";
+                    }
                 }else{
-                    comActionDisplay="Folds";
-                    revealComHand();
-                    gameStage="waitingNextHand";
+                    if(action.equals("call")){
+                        comActionDisplay="All in";
+                        comStack=0;
+                        potSize=400-p1Stack;
+                        gameStage="com6bet";
+                    }else{
+                        comActionDisplay="Folds";
+                        revealComHand();
+                        gameStage="waitingNextHand";
+                    }
                 }
-            }else if(playerActionAmount<200){
+
+            }else if(gameStage=="com6bet"){
+            if(orangeCallButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
+                p1Stack=comStack;
+                playerActionDisplay="Calls";
+                comActionDisplay="";
+                flopReveal=true;
+                gameStage="preflopAllin";
+
+            }else if(redFoldButton.checkIfClicked(Gdx.input.getX(),Gdx.input.getY())){
+                playerActionDisplay="Fold";
+                gameStage="waitingNextHand";
+            }
+            } else if(playerActionAmount<200){
                 String action=PokerAI.decideSmall5bet(comHand,board);
                 if(action.equals("raise")){
                     comActionDisplay="Raise to "+ 200;
@@ -318,7 +344,11 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
                 Gdx.input.getTextInput(this,"Bet...","","");
             }
         }else if(gameStage.equals("playerDonkFlop4bet")) {
-            String action=PokerAI.decideFacingFlopDonk4bet(comHand,board);
+            ArrayList<TheDeck>currentBoard=new ArrayList<>();
+            currentBoard.add(board.get(0));
+            currentBoard.add(board.get(1));
+            currentBoard.add(board.get(2));
+            String action=PokerAI.decideFacingFlopDonk4bet(comHand,currentBoard);
             if(action.equals("raise")){
                 comActionAmount=playerActionAmount+potSize;
                 comActionDisplay="Raise to "+comActionAmount;
@@ -331,7 +361,11 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
                 gameStage="waitingNextHand";
             }
         }else if(gameStage.equals("playerCheckFlop4bet")) {
-            String action=PokerAI.decideFacingFlopCheck4bet(comHand,board);
+            ArrayList<TheDeck>currentBoard=new ArrayList<>();
+            currentBoard.add(board.get(0));
+            currentBoard.add(board.get(1));
+            currentBoard.add(board.get(2));
+            String action=PokerAI.decideFacingFlopCheck4bet(comHand,currentBoard);
             if(action.equals("bet")){
                 comActionAmount=200-potSize/2;
                 comActionDisplay="All in";
@@ -363,7 +397,11 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
                 gameStage="waitingNextHand";
             }
         }else if(gameStage.equals("playerCheckedFlop")) {
-            String action=PokerAI.decideFacingFlopCheck(comHand,board);
+            ArrayList<TheDeck>currentBoard=new ArrayList<>();
+            currentBoard.add(board.get(0));
+            currentBoard.add(board.get(1));
+            currentBoard.add(board.get(2));
+            String action=PokerAI.decideFacingFlopCheck(comHand,currentBoard);
             if(action.equals("bet")){
                 comActionAmount=potSize;
                 comActionDisplay="Bets "+comActionAmount;
@@ -393,7 +431,11 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
                 gameStage="waitingNextHand";
             }
         }else if(gameStage.equals("playerReraisesFlop")) {
-            String action=PokerAI.decideFacingFlopReraise(comHand,board);
+            ArrayList<TheDeck>currentBoard=new ArrayList<>();
+            currentBoard.add(board.get(0));
+            currentBoard.add(board.get(1));
+            currentBoard.add(board.get(2));
+            String action=PokerAI.decideFacingFlopReraise(comHand,currentBoard);
             if(action.equals("raise")){
                 comActionAmount=potSize;
                 comActionDisplay="Goes All in ";
@@ -414,7 +456,12 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
                 Gdx.input.getTextInput(this,"Bet...","","");
             }
         }else if(gameStage.equals("turnPlayerDonksAfterCallingFlopReraise")) {
-            String action=PokerAI.decideFacingDonkAfterFlopReraise(comHand,board);
+            ArrayList<TheDeck>currentBoard=new ArrayList<>();
+            currentBoard.add(board.get(0));
+            currentBoard.add(board.get(1));
+            currentBoard.add(board.get(2));
+            currentBoard.add(board.get(3));
+            String action=PokerAI.decideFacingDonkAfterFlopReraise(comHand,currentBoard);
             if(p1Stack==0){
                 if(action.equals("raise")){
                     comActionAmount=potSize;
@@ -442,7 +489,12 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
             }
 
         }else if(gameStage.equals("turnPlayerCheckedAfterCallingFlopReraise")) {
-            String action=PokerAI.decideFacingCheckAfterFlopReraiseCall(comHand,board);
+            ArrayList<TheDeck>currentBoard=new ArrayList<>();
+            currentBoard.add(board.get(0));
+            currentBoard.add(board.get(1));
+            currentBoard.add(board.get(2));
+            currentBoard.add(board.get(3));
+            String action=PokerAI.decideFacingCheckAfterFlopReraiseCall(comHand,currentBoard);
             if(action.equals("bet")){
                 comActionAmount=potSize;
                 comActionDisplay="All In";
@@ -563,7 +615,7 @@ public class Screen extends ScreenAdapter implements Input.TextInputListener{
                         p1Stack=200-playerActionAmount;
                         gameStage="preflopFacing5bet";
                     }
-                }else if(gameStage.equals("flop")){
+                }else if(gameStage.equals("flopCallPreflopRaise")){
                     p1Stack=p1Stack-playerActionAmount;
                     playerActionDisplay="Bets "+playerActionAmount;
                     gameStage="playerBetFlop";

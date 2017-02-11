@@ -84,17 +84,39 @@ public class PokerAI {
         total.addAll(hand);
         total.addAll(board);
 
-        if (
-                (hand.get(0).getValue() == hand.get(1).getValue()) ||
-                        (hand.get(0).getValue() == board.get(0).getValue() || hand.get(0).getValue() == board.get(1).getValue() || hand.get(0).getValue() == board.get(2).getValue())  ||
-                        (hand.get(1).getValue() == board.get(0).getValue() || hand.get(1).getValue() == board.get(1).getValue() || hand.get(1).getValue() == board.get(2).getValue())  ||
-                        (hand.get(0).getValue()==13 || hand.get(1).getValue()==13) ||
-                        (total.get(0).getSuit().equals(total.get(1).getSuit()) && total.get(0).getSuit().equals(total.get(2).getSuit()) && total.get(0).getSuit().equals(total.get(3).getSuit()) && total.get(0).getSuit().equals(total.get(4).getSuit()))
-                ) {
+        if(checkForFlush(hand,board)){
+            action="raise";
+        }else if(checkForStraight(hand,board)) {
+            action="raise";
+        }else if(checkForSet(hand,board)) {
+            action="raise";
+        }else if(checkForTwoPair(hand,board)) {
+            action="raise";
+        }else if(checkForOverPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForTopPair(hand,board)) {
+            action="raise";
+        }else if(checkForSecondPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForSecondPair(hand,board)) {
+            action="raise";
+        }else if(checkForThirdPair(hand,board)) {
+            action="raise";
+        }else if(checkForThirdPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForFourthPair(hand,board)) {
+            action="raise";
+        }else if(checkForFifthPair(hand,board)) {
+            action="raise";
+        }else if(checkForHalfAceHigh(hand,board)) {
+            action="raise";
+        }else if(checkForAceHigh(hand,board)) {
             action="raise";
         }else{
             action="fold";
         }
+
+
         return action;
     }
 
@@ -102,24 +124,41 @@ public class PokerAI {
         String action="";
         ArrayList<TheDeck>total=new ArrayList<>();
         total.addAll(hand);
-        ArrayList<TheDeck>flop=new ArrayList<>();
-        flop.add(board.get(0));
-        flop.add(board.get(1));
-        flop.add(board.get(2));
-        Collections.sort(flop);
-        total.addAll(flop);
+        total.addAll(board);
 
-        if (
-                (hand.get(0).getValue() == hand.get(1).getValue()) ||
-                        (hand.get(0).getValue() == board.get(0).getValue() || hand.get(0).getValue() == board.get(1).getValue() || hand.get(0).getValue() == board.get(2).getValue())  ||
-                        (hand.get(1).getValue() == board.get(0).getValue() || hand.get(1).getValue() == board.get(1).getValue() || hand.get(1).getValue() == board.get(2).getValue())  ||
-                        (hand.get(0).getValue()==13 || hand.get(1).getValue()==13) ||
-                        (total.get(0).getSuit().equals(total.get(1).getSuit()) && total.get(0).getSuit().equals(total.get(2).getSuit()) && total.get(0).getSuit().equals(total.get(3).getSuit()) && total.get(0).getSuit().equals(total.get(4).getSuit()))
-                ) {
+        if(checkForFlush(hand,board)){
+            action="bet";
+        }else if(checkForStraight(hand,board)) {
+            action="bet";
+        }else if(checkForSet(hand,board)) {
+            action="bet";
+        }else if(checkForTwoPair(hand,board)) {
+            action="bet";
+        }else if(checkForOverPocketPair(hand,board)) {
+            action="bet";
+        }else if(checkForTopPair(hand,board)) {
+            action="bet";
+        }else if(checkForSecondPocketPair(hand,board)) {
+            action="bet";
+        }else if(checkForSecondPair(hand,board)) {
+            action="bet";
+        }else if(checkForThirdPair(hand,board)) {
+            action="bet";
+        }else if(checkForThirdPocketPair(hand,board)) {
+            action="bet";
+        }else if(checkForFourthPair(hand,board)) {
+            action="bet";
+        }else if(checkForFifthPair(hand,board)) {
+            action="bet";
+        }else if(checkForHalfAceHigh(hand,board)) {
+            action="bet";
+        }else if(checkForAceHigh(hand,board)) {
             action="bet";
         }else{
-            action="check";
+            action="fold";
         }
+
+
         return action;
     }
 
@@ -127,29 +166,29 @@ public class PokerAI {
         String action="";
         ArrayList<TheDeck>total=new ArrayList<>();
         total.addAll(hand);
-        ArrayList<TheDeck>flop=new ArrayList<>();
-        flop.add(board.get(0));
-        flop.add(board.get(1));
-        flop.add(board.get(2));
-        Collections.sort(flop);
-        total.addAll(flop);
+        total.addAll(board);
 
-        if (
-                (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue()>flop.get(1).getValue() && hand.get(0).getValue()>flop.get(1).getValue()) ||
-                        (hand.get(0).getValue() == flop.get(1).getValue() || hand.get(1).getValue() == flop.get(1).getValue()) ||
-                        (hand.get(0).getValue() == flop.get(0).getValue() || hand.get(1).getValue() == flop.get(0).getValue()) ||
-                        (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue() == flop.get(0).getValue() ) ||
-                        (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue() == flop.get(1).getValue() ) ||
-                        (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue() == flop.get(2).getValue() ) ||
-                        ((hand.get(0).getValue() == flop.get(0).getValue() || hand.get(0).getValue() == flop.get(1).getValue() || hand.get(0).getValue() == flop.get(2).getValue()) && (hand.get(1).getValue() == flop.get(0).getValue() || hand.get(1).getValue() == flop.get(1).getValue() || hand.get(1).getValue() == flop.get(2).getValue())) ||
-                        (total.get(0).getSuit().equals(total.get(1).getSuit()) && total.get(0).getSuit().equals(total.get(2).getSuit()) && total.get(0).getSuit().equals(total.get(3).getSuit()) && total.get(0).getSuit().equals(total.get(4).getSuit()))
-
-
-                ) {
+        if(checkForFlush(hand,board)){
+            action="raise";
+        }else if(checkForStraight(hand,board)) {
+            action="raise";
+        }else if(checkForSet(hand,board)) {
+            action="raise";
+        }else if(checkForTwoPair(hand,board)) {
+            action="raise";
+        }else if(checkForOverPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForTopPair(hand,board)) {
+            action="raise";
+        }else if(checkForSecondPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForSecondPair(hand,board)) {
             action="raise";
         }else{
             action="fold";
         }
+
+
         return action;
     }
 
@@ -157,26 +196,39 @@ public class PokerAI {
         String action="";
         ArrayList<TheDeck>total=new ArrayList<>();
         total.addAll(hand);
-        ArrayList<TheDeck>flop=new ArrayList<>();
-        flop.add(board.get(0));
-        flop.add(board.get(1));
-        flop.add(board.get(2));
-        Collections.sort(flop);
-        total.addAll(flop);
+        total.addAll(board);
 
-        if (
-                (hand.get(0).getValue()==hand.get(1).getValue()) ||
-                        (hand.get(0).getValue()==flop.get(0).getValue() || hand.get(0).getValue()==flop.get(1).getValue() ||hand.get(0).getValue()==flop.get(1).getValue()) ||
-                        (hand.get(1).getValue()==flop.get(0).getValue() || hand.get(1).getValue()==flop.get(1).getValue() ||hand.get(1).getValue()==flop.get(2).getValue()) ||
-                        (hand.get(0).getValue()==13 && hand.get(1).getValue()>7) ||
-                        (hand.get(1).getValue()==13 && hand.get(0).getValue()>7)
-
-
-                ) {
+        if(checkForFlush(hand,board)){
+            action="raise";
+        }else if(checkForStraight(hand,board)) {
+            action="raise";
+        }else if(checkForSet(hand,board)) {
+            action="raise";
+        }else if(checkForTwoPair(hand,board)) {
+            action="raise";
+        }else if(checkForOverPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForTopPair(hand,board)) {
+            action="raise";
+        }else if(checkForSecondPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForSecondPair(hand,board)) {
+            action="raise";
+        }else if(checkForThirdPair(hand,board)) {
+            action="raise";
+        }else if(checkForThirdPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForFourthPair(hand,board)) {
+            action="raise";
+        }else if(checkForFifthPair(hand,board)) {
+            action="raise";
+        }else if(checkForHalfAceHigh(hand,board)) {
             action="raise";
         }else{
             action="fold";
         }
+
+
         return action;
     }
 
@@ -184,26 +236,39 @@ public class PokerAI {
         String action="";
         ArrayList<TheDeck>total=new ArrayList<>();
         total.addAll(hand);
-        ArrayList<TheDeck>flop=new ArrayList<>();
-        flop.add(board.get(0));
-        flop.add(board.get(1));
-        flop.add(board.get(2));
-        Collections.sort(flop);
-        total.addAll(flop);
+        total.addAll(board);
 
-        if (
-                (hand.get(0).getValue()==hand.get(1).getValue()) ||
-                        (hand.get(0).getValue()==flop.get(0).getValue() || hand.get(0).getValue()==flop.get(1).getValue() ||hand.get(0).getValue()==flop.get(1).getValue()) ||
-                        (hand.get(1).getValue()==flop.get(0).getValue() || hand.get(1).getValue()==flop.get(1).getValue() ||hand.get(1).getValue()==flop.get(2).getValue()) ||
-                        (hand.get(0).getValue()==13 && hand.get(1).getValue()>7) ||
-                        (hand.get(1).getValue()==13 && hand.get(0).getValue()>7)
-
-
-                ) {
+        if(checkForFlush(hand,board)){
+            action="bet";
+        }else if(checkForStraight(hand,board)) {
+            action="bet";
+        }else if(checkForSet(hand,board)) {
+            action="bet";
+        }else if(checkForTwoPair(hand,board)) {
+            action="bet";
+        }else if(checkForOverPocketPair(hand,board)) {
+            action="bet";
+        }else if(checkForTopPair(hand,board)) {
+            action="bet";
+        }else if(checkForSecondPocketPair(hand,board)) {
+            action="bet";
+        }else if(checkForSecondPair(hand,board)) {
+            action="bet";
+        }else if(checkForThirdPair(hand,board)) {
+            action="bet";
+        }else if(checkForThirdPocketPair(hand,board)) {
+            action="bet";
+        }else if(checkForFourthPair(hand,board)) {
+            action="bet";
+        }else if(checkForFifthPair(hand,board)) {
+            action="bet";
+        }else if(checkForHalfAceHigh(hand,board)) {
             action="bet";
         }else{
-            action="check";
+            action="fold";
         }
+
+
         return action;
     }
 
@@ -211,29 +276,37 @@ public class PokerAI {
         String action="";
         ArrayList<TheDeck>total=new ArrayList<>();
         total.addAll(hand);
-        ArrayList<TheDeck>flop=new ArrayList<>();
-        flop.add(board.get(0));
-        flop.add(board.get(1));
-        flop.add(board.get(2));
-        Collections.sort(flop);
-        total.addAll(flop);
+        total.addAll(board);
 
-        if (
-                (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue()>flop.get(1).getValue() && hand.get(0).getValue()>flop.get(1).getValue()) ||
-                        (hand.get(0).getValue() == flop.get(1).getValue() || hand.get(1).getValue() == flop.get(1).getValue()) ||
-                        (hand.get(0).getValue() == flop.get(0).getValue() || hand.get(1).getValue() == flop.get(0).getValue()) ||
-                        (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue() == flop.get(0).getValue() ) ||
-                        (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue() == flop.get(1).getValue() ) ||
-                        (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue() == flop.get(2).getValue() ) ||
-                        ((hand.get(0).getValue() == flop.get(0).getValue() || hand.get(0).getValue() == flop.get(1).getValue() || hand.get(0).getValue() == flop.get(2).getValue()) && (hand.get(1).getValue() == flop.get(0).getValue() || hand.get(1).getValue() == flop.get(1).getValue() || hand.get(1).getValue() == flop.get(2).getValue())) ||
-                        (total.get(0).getSuit().equals(total.get(1).getSuit()) && total.get(0).getSuit().equals(total.get(2).getSuit()) && total.get(0).getSuit().equals(total.get(3).getSuit()) && total.get(0).getSuit().equals(total.get(4).getSuit()))
-
-
-                ) {
+        if(checkForFlush(hand,board)){
+            action="raise";
+        }else if(checkForStraight(hand,board)) {
+            action="raise";
+        }else if(checkForSet(hand,board)) {
+            action="raise";
+        }else if(checkForTwoPair(hand,board)) {
+            action="raise";
+        }else if(checkForOverPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForTopPair(hand,board)) {
+            action="raise";
+        }else if(checkForSecondPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForSecondPair(hand,board)) {
+            action="raise";
+        }else if(checkForThirdPair(hand,board)) {
+            action="raise";
+        }else if(checkForThirdPocketPair(hand,board)) {
+            action="raise";
+        }else if(checkForFourthPair(hand,board)) {
+            action="raise";
+        }else if(checkForFifthPair(hand,board)) {
             action="raise";
         }else{
             action="fold";
         }
+
+
         return action;
     }
 
@@ -241,30 +314,37 @@ public class PokerAI {
         String action="";
         ArrayList<TheDeck>total=new ArrayList<>();
         total.addAll(hand);
-        ArrayList<TheDeck>boardSorted=new ArrayList<>();
-        boardSorted.add(board.get(0));
-        boardSorted.add(board.get(1));
-        boardSorted.add(board.get(2));
-        boardSorted.add(board.get(3));
-        Collections.sort(boardSorted);
-        
+        total.addAll(board);
 
-        if (
-                (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue()>boardSorted.get(1).getValue() && hand.get(0).getValue()>boardSorted.get(1).getValue()) ||
-                        (hand.get(0).getValue() == boardSorted.get(1).getValue() || hand.get(1).getValue() == boardSorted.get(1).getValue()) ||
-                        (hand.get(0).getValue() == boardSorted.get(0).getValue() || hand.get(1).getValue() == boardSorted.get(0).getValue()) ||
-                        (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue() == boardSorted.get(0).getValue() ) ||
-                        (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue() == boardSorted.get(1).getValue() ) ||
-                        (hand.get(0).getValue() == hand.get(1).getValue() && hand.get(0).getValue() == boardSorted.get(2).getValue() ) ||
-                        ((hand.get(0).getValue() == boardSorted.get(0).getValue() || hand.get(0).getValue() == boardSorted.get(1).getValue() || hand.get(0).getValue() == boardSorted.get(2).getValue()) && (hand.get(1).getValue() == boardSorted.get(0).getValue() || hand.get(1).getValue() == boardSorted.get(1).getValue() || hand.get(1).getValue() == boardSorted.get(2).getValue())) ||
-                        (total.get(0).getSuit().equals(total.get(1).getSuit()) && total.get(0).getSuit().equals(total.get(2).getSuit()) && total.get(0).getSuit().equals(total.get(3).getSuit()) && total.get(0).getSuit().equals(total.get(4).getSuit()))
-
-
-                ) {
-            action="raise";
+        if(checkForFlush(hand,board)){
+            action="bet";
+        }else if(checkForStraight(hand,board)) {
+            action="bet";
+        }else if(checkForSet(hand,board)) {
+            action="bet";
+        }else if(checkForTwoPair(hand,board)) {
+            action="bet";
+        }else if(checkForOverPocketPair(hand,board)) {
+            action="bet";
+        }else if(checkForTopPair(hand,board)) {
+            action="bet";
+        }else if(checkForSecondPocketPair(hand,board)) {
+            action="bet";
+        }else if(checkForSecondPair(hand,board)) {
+            action="bet";
+        }else if(checkForThirdPair(hand,board)) {
+            action="bet";
+        }else if(checkForThirdPocketPair(hand,board)) {
+            action="bet";
+        }else if(checkForFourthPair(hand,board)) {
+            action="bet";
+        }else if(checkForFifthPair(hand,board)) {
+            action="bet";
         }else{
             action="fold";
         }
+
+
         return action;
     }
 
